@@ -4,7 +4,7 @@ import axios from "axios";
 
 function App() {
   const [token, setToken] = useState<any>("");
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<any>([]);
 
   const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 
@@ -63,7 +63,7 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
     }
   }, []);
 
-  const getArtist = () => {
+  const getPlaylist = () => {
     axios
       .get(PLAYLIST_ENDPOINT, {
         headers: {
@@ -78,15 +78,42 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       });
   };
 
+  const getArtist = () => {
+    axios
+      .get(
+        "https://api.spotify.com/v1/artists?ids=2CIMQHirSU0MQqyYHq0eOx%2C57dN52uHvrHOxijzpIgu3E%2C1vCWHaC5f2uS3yhpwWbIA6",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(
+          `response is ${JSON.stringify(response.data.artists[1].name)}`
+        );
+        // setData(newData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="App">
       <button onClick={handleLogin}>Login</button>
+      <button onClick={getPlaylist}>Get playlist</button>
+      {data?.items ? (
+        data.items.map((item: any) => {
+          <p>{item.name}</p>;
+        })
+      ) : (
+        <div>hi</div>
+      )}
       <button onClick={getArtist}>Get Artist</button>
-      {data?.items
-        ? data.items.map((item: any) => {
-            <p>{item.name}</p>;
-          })
-        : null}
+      {data.map((item: any) => {
+        <div>hi</div>;
+      })}
     </div>
   );
 }
