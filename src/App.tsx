@@ -9,6 +9,7 @@ function App() {
   const [popularity, setPopularity] = useState<string>("");
   const [followers, setFollowers] = useState<string>("");
   const [image, setImage] = useState<string>("");
+  const [id, setId] = useState<string>("");
 
   const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 
@@ -95,6 +96,7 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       .then((response) => {
         console.log(
           // `main data  ${JSON.stringify(response)}`,
+          `Id Of the user is  ${JSON.stringify(response.data.artists[0].id)}`,
           `name is ${JSON.stringify(response.data.artists[0].name)}`,
           `popularity is ${JSON.stringify(
             response.data.artists[0].popularity
@@ -104,6 +106,7 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
           )}`,
           `image is  ${JSON.stringify(response.data.artists[0].images[0].url)}`
         );
+
         // setData(newData);
       })
       .catch((error) => {
@@ -122,18 +125,19 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
         }
       )
       .then((response) => {
-        // console.log(
-        //   // `main data  ${JSON.stringify(response)}`,
-        //   `followers is ${JSON.stringify(
-        //     response.data.artists.items[0].followers.total
-        //   )}`,
-        //   `image is ${JSON.stringify(
-        //     response.data.artists.items[0].images[0].url
-        //   )}`,
-        //   `popularity is  ${JSON.stringify(
-        //     response.data.artists.items[0].popularity
-        //   )}`
-        // );
+        console.log(
+          // `main data  ${JSON.stringify(response)}`,
+          `followers is ${JSON.stringify(
+            response.data.artists.items[0].followers.total
+          )}`,
+          `image is ${JSON.stringify(
+            response.data.artists.items[0].images[0].url
+          )}`,
+          `popularity is  ${JSON.stringify(
+            response.data.artists.items[0].popularity
+          )}`,
+          `id is   ${JSON.stringify(response.data.artists.items[0].id)}`
+        );
 
         setPopularity(
           JSON.stringify(response.data.artists.items[0].popularity)
@@ -141,7 +145,36 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
         setFollowers(
           JSON.stringify(response.data.artists.items[0].followers.total)
         );
+        setId(JSON.stringify(response.data.artists.items[0].id));
         setImage(JSON.stringify(response.data.artists.items[0].images[0].url));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const AlbumSearch = () => {
+    axios
+      .get(
+        `https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/albums?include_groups=single%2Cappears_on&market=ES&limit=10&offset=5`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        console.log(`album name ${response.data.items[1].name}`);
+        console.log(`release date ${response.data.items[1].release_date}`);
+        console.log(`total tracks ${response.data.items[1].total_tracks}`);
+        console.log(
+          `preview album link ${response.data.items[1].external_urls.spotify}`
+        );
+        console.log(
+          `Artits included  ${response.data.items[1].artists[0].name}`
+        );
+        console.log(`Album cover is  ${response.data.items[1].images[0].url}`);
       })
       .catch((error) => {
         console.log(error);
@@ -154,6 +187,8 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       <button onClick={getPlaylist}>Get playlist</button>
       <button onClick={getArtist}>Get Artist</button>
       <button onClick={searchArtist}>Search Artist </button>
+      <button onClick={AlbumSearch}>Album Search </button>
+
       <input
         onChange={(e) => {
           setSearchQuery(e.target.value);
