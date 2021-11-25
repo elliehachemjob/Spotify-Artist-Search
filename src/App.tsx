@@ -5,7 +5,10 @@ import axios from "axios";
 function App() {
   const [token, setToken] = useState<any>("");
   const [data, setData] = useState<any>([]);
-  const [searchQuery, setSearchQuery] = useState<any>("deadmau5");
+  const [searchQuery, setSearchQuery] = useState<string>("deadmau5");
+  const [popularity, setPopularity] = useState<string>("");
+  const [followers, setFollowers] = useState<string>("");
+  const [image, setImage] = useState<string>("");
 
   const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 
@@ -119,20 +122,26 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
         }
       )
       .then((response) => {
-        console.log(
-          // `main data  ${JSON.stringify(response)}`,
-          `followers is ${JSON.stringify(
-            response.data.artists.items[0].followers.total
-          )}`,
-          `image is ${JSON.stringify(
-            response.data.artists.items[0].images[0].url
-          )}`,
-          `popularity is  ${JSON.stringify(
-            response.data.artists.items[0].popularity
-          )}`
-          // `image is  ${JSON.stringify(response.data.artists[0].images[0].url)}`
+        // console.log(
+        //   // `main data  ${JSON.stringify(response)}`,
+        //   `followers is ${JSON.stringify(
+        //     response.data.artists.items[0].followers.total
+        //   )}`,
+        //   `image is ${JSON.stringify(
+        //     response.data.artists.items[0].images[0].url
+        //   )}`,
+        //   `popularity is  ${JSON.stringify(
+        //     response.data.artists.items[0].popularity
+        //   )}`
+        // );
+
+        setPopularity(
+          JSON.stringify(response.data.artists.items[0].popularity)
         );
-        // setData(newData);
+        setFollowers(
+          JSON.stringify(response.data.artists.items[0].followers.total)
+        );
+        setImage(JSON.stringify(response.data.artists.items[0].images[0].url));
       })
       .catch((error) => {
         console.log(error);
@@ -145,6 +154,23 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       <button onClick={getPlaylist}>Get playlist</button>
       <button onClick={getArtist}>Get Artist</button>
       <button onClick={searchArtist}>Search Artist </button>
+      <input
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+        }}
+      />
+      <table>
+        <tr>
+          <th>Image</th>
+          <th>Poplurity</th>
+          <th>Followers</th>
+        </tr>
+        <tr>
+          <td>{image}</td>
+          <td>{popularity}</td>
+          <td>{followers}</td>
+        </tr>
+      </table>
     </div>
   );
 }
