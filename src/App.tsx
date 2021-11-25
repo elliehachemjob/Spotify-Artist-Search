@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
 
 function App() {
+  const [token, setToken] = useState<any>("");
+  const [data, setData] = useState<any>({});
+
+  const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
+
   const SPOTIFY_ENDPOINT_AUTHORIZATION =
     "https://accounts.spotify.com/authorize";
 
@@ -11,6 +16,7 @@ function App() {
   const SCOPES: any = [
     "user-read-playback-state",
     "user-read-currently-playing",
+    "playlist-read-private",
   ];
   const DELIMITER: any = "%20";
   const SCOPE_URI_PARAM: any = SCOPES.join(DELIMITER);
@@ -51,9 +57,36 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
     }
   });
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setToken(localStorage.getItem("accessToken"));
+    }
+  }, []);
+
+  const getArtist = () => {
+    axios
+      .get(PLAYLIST_ENDPOINT, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="App">
       <button onClick={handleLogin}>Login</button>
+      <button onClick={getArtist}>Get Artist</button>
+      {data?.items
+        ? data.items.map((item: any) => {
+            <p>{item.name}</p>;
+          })
+        : null}
     </div>
   );
 }
