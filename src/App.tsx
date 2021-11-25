@@ -90,7 +90,13 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       )
       .then((response) => {
         console.log(
-          `response is ${JSON.stringify(response.data.artists[1].name)}`
+          `name is ${JSON.stringify(response.data.artists[1].name)}`,
+          `popularity is ${JSON.stringify(
+            response.data.artists[1].popularity
+          )}`,
+          `followers count is ${JSON.stringify(
+            response.data.artists[1].followers.total
+          )}`
         );
         // setData(newData);
       })
