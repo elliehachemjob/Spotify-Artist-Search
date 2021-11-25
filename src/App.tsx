@@ -5,6 +5,7 @@ import axios from "axios";
 function App() {
   const [token, setToken] = useState<any>("");
   const [data, setData] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState<any>("deadmau5");
 
   const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 
@@ -90,13 +91,46 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
       )
       .then((response) => {
         console.log(
-          `name is ${JSON.stringify(response.data.artists[1].name)}`,
+          // `main data  ${JSON.stringify(response)}`,
+          `name is ${JSON.stringify(response.data.artists[0].name)}`,
           `popularity is ${JSON.stringify(
-            response.data.artists[1].popularity
+            response.data.artists[0].popularity
           )}`,
           `followers count is ${JSON.stringify(
-            response.data.artists[1].followers.total
+            response.data.artists[0].followers.total
+          )}`,
+          `image is  ${JSON.stringify(response.data.artists[0].images[0].url)}`
+        );
+        // setData(newData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const searchArtist = () => {
+    axios
+      .get(
+        `https://api.spotify.com/v1/search?q=${searchQuery}&type=track%2Cartist`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(
+          // `main data  ${JSON.stringify(response)}`,
+          `followers is ${JSON.stringify(
+            response.data.artists.items[0].followers.total
+          )}`,
+          `image is ${JSON.stringify(
+            response.data.artists.items[0].images[0].url
+          )}`,
+          `popularity is  ${JSON.stringify(
+            response.data.artists.items[0].popularity
           )}`
+          // `image is  ${JSON.stringify(response.data.artists[0].images[0].url)}`
         );
         // setData(newData);
       })
@@ -109,17 +143,8 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
     <div className="App">
       <button onClick={handleLogin}>Login</button>
       <button onClick={getPlaylist}>Get playlist</button>
-      {data?.items ? (
-        data.items.map((item: any) => {
-          <p>{item.name}</p>;
-        })
-      ) : (
-        <div>hi</div>
-      )}
       <button onClick={getArtist}>Get Artist</button>
-      {data.map((item: any) => {
-        <div>hi</div>;
-      })}
+      <button onClick={searchArtist}>Search Artist </button>
     </div>
   );
 }
