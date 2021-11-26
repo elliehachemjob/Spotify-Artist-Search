@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+# Spotify-Artist-Search
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Spotify Artist Search is a special App that lets you Search for your favorite Artist, including his Albums
 
-## Available Scripts
+## How to run the app
 
-In the project directory, you can run:
+1. Either fork or download the app and open the folder in the cli
+2. Install all dependencies using the `npm i` command
+3. Start the web server using the `npm run` command. The app will be served at http://localhost:3000/
+4. Go to http://localhost:3000/ in your browser and start the action.
 
-### `yarn start`
+## How to use the Program
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Simply Search for your Artist.
+2. Supply the optional props to the component if needed .
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `yarn test`
+- Search Panel
+  - Search your favorite Artist
+  - Followers of artist will be shown
+  - Rating of artist will be shown
+- Albums Detailed Once searched for your artist and clicked on his cards you can see the following data:
+  - His Album Names
+  -
+- Preiview Albums
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - See the albums related to your favourite Artist
+  - Other Artists Involded
+  - Release Date
+  - Number of Tracks
 
-### `yarn build`
+  ## Future Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- More Control in term of searching/filtering
+- Bug Fixes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- "@emotion/react": "^11.6.0",
+- "@emotion/styled": "^11.6.0",
+- "@material-ui/core": "^4.12.3",
+- "@material-ui/icons": "^4.11.2",
+- "@mui/icons-material": "^5.2.0",
+- "@mui/material": "^5.2.1",
+- "@testing-library/jest-dom": "^5.11.4",
+- "@testing-library/react": "^11.1.0",
+- "@testing-library/user-event": "^12.1.10",
+- "@types/jest": "^26.0.15",
+- "@types/node": "^12.0.0",
+- "@types/react": "^17.0.0",
+- "@types/react-dom": "^17.0.0",
+- "axios": "^0.24.0",
+- "react": "^17.0.2",
+- "react-dom": "^17.0.2",
+- "react-router-dom": "^5.3.0",
+- "react-scripts": "4.0.3",
+- "typescript": "^4.1.2",
+- "web-vitals": "^1.0.1"
 
-### `yarn eject`
+## What the app looks like
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Album Search](https://github.com/elliehachemjob/react-customer-support/blob/master/screenshots/Admin.PNG)
+![Artist Search](https://github.com/elliehachemjob/react-customer-support/blob/master/screenshots/Client.PNG)
