@@ -60,5 +60,5 @@ Spotify Artist Search is a special App that lets you Search for your favorite Ar
 
 ## What the app looks like
 
-![Album Search](https://github.com/elliehachemjob/react-customer-support/blob/master/screenshots/Admin.PNG)
-![Artist Search](https://github.com/elliehachemjob/react-customer-support/blob/master/screenshots/Client.PNG)
+![Album Search]()
+![Artist Search]()
