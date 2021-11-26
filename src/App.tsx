@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ArtistAlbums } from "./page/ArtistAlbums";
 import { Dashboard } from "./page/Dashboard";
+import { useLocalstorage } from "rooks";
 
 function App() {
-  const [token, setToken] = useState<any>("");
+  const [token, setToken, removeToken] = useLocalstorage("accessToken");
 
   const SPOTIFY_ENDPOINT_AUTHORIZATION =
     "https://accounts.spotify.com/authorize";

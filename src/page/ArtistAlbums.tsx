@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import "../App.css";
+import { useLocalstorage } from "rooks";
 
 export function ArtistAlbums() {
   const [albumName, setAlbumName] = useState<any>();
@@ -18,16 +19,19 @@ export function ArtistAlbums() {
   const [albumCover, setAlbumCover] = useState<any>();
   const [items, setItems] = useState<any>();
   const [value, setValue] = useState<any>();
+  const [token, setToken, removeToken] = useLocalstorage("accessToken", 0);
+  const [id, setId, removeId] = useLocalstorage("id");
 
   useEffect(() => {
+    const datanew = localStorage.getItem("accessToken");
+    const idNew = localStorage.getItem("id"); // value
+
     axios
       .get(
-        `https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/albums?include_groups=single%2Cappears_on&market=ES&limit=10&offset=5`,
+        `https://api.spotify.com/v1/artists/${idNew}/albums?include_groups=single%2Cappears_on&market=ES&limit=10&offset=5`,
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "BQDdOsPHDIML_0X_fZTUgl3iN4D2n3VrB4MIKeiExAdFIWP3bXvwoA_94jL9OsEPugPJM14QwcYy2x8_OEzx3Obhf2b5UvRdSab70C4hUmVkidbo5WRVCFhmM6sw1tvpS5KKhqRf7p3d82fZM5uqsHQn57V0Icgc2znZyNbkXM3QZsjPvg&token",
+            Authorization: `Bearer ${datanew}`,
           },
         }
       )

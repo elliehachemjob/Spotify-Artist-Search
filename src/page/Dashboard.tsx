@@ -10,17 +10,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import "../App.css";
 import SearchComponent from "../components/SearchComponent";
+import { useLocalstorage } from "rooks";
 
 export function Dashboard() {
   const [searchQuery, setSearchQuery] = useState<string>("a");
   const [value, setValue] = useState<any>();
   const [items, setItems] = useState<any>();
-
-  // @ts-ignore
-  // const data = JSON.parse(localStorage.getItem("accessToken"));
-  // console.log(data);
+  const [token, setToken, removeToken] = useLocalstorage("accessToken");
+  const [id, setId, removeId] = useLocalstorage("id");
 
   const searchArtist = (e: any) => {
+    const datanew = localStorage.getItem("accessToken"); // value
+    console.log(` the token is ${datanew}`);
+
     setSearchQuery(e.target.value);
 
     axios
@@ -28,9 +30,7 @@ export function Dashboard() {
         `https://api.spotify.com/v1/search?q=${searchQuery}&type=track%2Cartist`,
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "BQD6ia1WjiQgK8t0Nz8XFAi_9iD2vu5MK8OgB-2Q0O7xMLGHKbyAH5YCH8h27lB74nUPrrLhew-nTYfv80pisTQPFJ4D94_6OaYfq_hRVVnzC3mAKLNnR2ySOjeoXLisR150eEAox56dmBOs7Y1J2uRptmyA5sZXU6KiI7u1ReJDoioEXg",
+            Authorization: "Bearer " + datanew,
           },
         }
       )
@@ -58,7 +58,7 @@ export function Dashboard() {
                   <Link to="/artist/albums/">
                     <Card
                       onClick={() => {
-                        alert(filteredItem.id);
+                        localStorage.setItem("id", filteredItem.id);
                       }}
                       className="item"
                       sx={{ maxWidth: 300 }}
