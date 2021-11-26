@@ -1,6 +1,6 @@
 # Spotify-Artist-Search
 
-Spotify Artist Search is a special App that lets you Search for your favorite Artist, including his Albums
+Spotify Artist Search is a special App that lets you search for your favorite Artist, including his Albums
 
 ## How to run the app
 
@@ -12,26 +12,26 @@ Spotify Artist Search is a special App that lets you Search for your favorite Ar
 ## How to use the Program
 
 1. Simply Search for your Artist.
-2. Supply the optional props to the component if needed .
+2. Supply the optional props to the component if needed.
 
 ## Features
 
 - Search Panel
   - Search your favorite Artist
-  - Followers of artist will be shown
-  - Rating of artist will be shown
-- Albums Detailed Once searched for your artist and clicked on his cards you can see the following data:
+  - Followers of the artist will be shown
+  - Rating of the artist will be shown
+- Albums Detailed Once search for your artist and click on his cards you can see the following data:
  - His Album Names
- - Preiview Albums
+ - Preview Albums
 
-  - See the albums related to your favourite Artist
-  - Other Artists Involded
+  - See the albums related to your favorite Artist
+  - Other Artists Involved
   - Release Date
   - Number of Tracks
 
   ## Future Features
 
-- More Control in term of searching/filtering
+- More Control in terms of searching/filtering
 - Bug Fixes
 
 ## Dependencies
