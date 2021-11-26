@@ -94,12 +94,6 @@ export function Dashboard() {
                           {filteredItem.popularity} popularity
                         </Typography>
 
-                        <Typography
-                          sx={{ position: "relative", top: 30 }}
-                          color="text.secondary"
-                        >
-                          {filteredItem.total_tracks} tracks
-                        </Typography>
                         <Rating
                           style={{ position: "relative", top: 25, right: 4.5 }}
                           name="simple-controlled"
