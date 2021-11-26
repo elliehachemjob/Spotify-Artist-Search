@@ -21,9 +21,8 @@ Spotify Artist Search is a special App that lets you Search for your favorite Ar
   - Followers of artist will be shown
   - Rating of artist will be shown
 - Albums Detailed Once searched for your artist and clicked on his cards you can see the following data:
-  - His Album Names
-  -
-- Preiview Albums
+ - His Album Names
+ - Preiview Albums
 
   - See the albums related to your favourite Artist
   - Other Artists Involded
