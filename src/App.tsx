@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ArtistAlbums } from "./page/ArtistAlbums";
+import { Dashboard } from "./page/Dashboard";
 
 function App() {
   const [token, setToken] = useState<any>("");
-  const [data, setData] = useState<any>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("deadmau5");
-  const [popularity, setPopularity] = useState<string>("");
-  const [followers, setFollowers] = useState<string>("");
-  const [image, setImage] = useState<string>("");
-  const [id, setId] = useState<string>("");
-
-  const PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 
   const SPOTIFY_ENDPOINT_AUTHORIZATION =
     "https://accounts.spotify.com/authorize";
 
   const CLIENT_ID: any = "eae2c519c3084b16a48056ce021a5ae2";
-  const REDIRECT_URI: any = "http://localhost:3000/";
+  const REDIRECT_URI: any = "http://localhost:3000/dashboard/";
   const SCOPES: any = [
     "user-read-playback-state",
     "user-read-currently-playing",
@@ -29,11 +25,9 @@ function App() {
   const handleLogin = () => {
     // @ts-ignore
     window.location = `${SPOTIFY_ENDPOINT_AUTHORIZATION}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE_URI_PARAM}&response_type=token&show_dialog=true`;
+    // var x = localStorage.getItem("accessToken");
+    // console.log(`access token is ${x}`);
   };
-
-  /*
-expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSIxmu-f5iMzxhhRU7uvFVysPOgZwsgU8IgPS7T1CzUbS8gv1_KpYQ_kaSSeZ5aL8mPswB7SdlKhilqsDLp1YfNj-jRgpZA3ogPNTZgCJNYg4YVJXQDHRC-g7cdTZ-k9HEROgnnFBCpA&token_type=Bearer&expires_in=3600
-*/
 
   const getReturnParamsFromSpotifyAuth = (hash: any) => {
     const stringAfterHash = hash.substring(1);
@@ -68,145 +62,61 @@ expected Url: http://localhost:3000/#access_token=BQADfrbQPCfRd-1FPIdzEs6LkLpWSI
     }
   }, []);
 
-  const getPlaylist = () => {
-    axios
-      .get(PLAYLIST_ENDPOINT, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const useStyles = makeStyles({
+    login: {
+      display: "grid",
+      placeItems: "center",
+      height: "100vh",
+      backgroundColor: "black",
 
-  const getArtist = () => {
-    axios
-      .get(
-        "https://api.spotify.com/v1/artists?ids=2CIMQHirSU0MQqyYHq0eOx%2C57dN52uHvrHOxijzpIgu3E%2C1vCWHaC5f2uS3yhpwWbIA6",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(
-          // `main data  ${JSON.stringify(response)}`,
-          `Id Of the user is  ${JSON.stringify(response.data.artists[0].id)}`,
-          `name is ${JSON.stringify(response.data.artists[0].name)}`,
-          `popularity is ${JSON.stringify(
-            response.data.artists[0].popularity
-          )}`,
-          `followers count is ${JSON.stringify(
-            response.data.artists[0].followers.total
-          )}`,
-          `image is  ${JSON.stringify(response.data.artists[0].images[0].url)}`
-        );
+      "& img": {
+        width: "50%",
+      },
 
-        // setData(newData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+      "& a": {
+        padding: "20px",
+        borderRadius: "99px",
+        backgroundColor: "#1db954",
+        fontWeight: 600,
+        color: "white",
+        textDecoration: "none",
+      },
 
-  const searchArtist = () => {
-    axios
-      .get(
-        `https://api.spotify.com/v1/search?q=${searchQuery}&type=track%2Cartist`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(
-          // `main data  ${JSON.stringify(response)}`,
-          `followers is ${JSON.stringify(
-            response.data.artists.items[0].followers.total
-          )}`,
-          `image is ${JSON.stringify(
-            response.data.artists.items[0].images[0].url
-          )}`,
-          `popularity is  ${JSON.stringify(
-            response.data.artists.items[0].popularity
-          )}`,
-          `id is   ${JSON.stringify(response.data.artists.items[0].id)}`
-        );
+      "& a:hover": {
+        backgroundColor: " white",
+        borderColor: "#1db954",
+        color: "#1db954",
+      },
+    },
+  });
+  const classes = useStyles();
 
-        setPopularity(
-          JSON.stringify(response.data.artists.items[0].popularity)
-        );
-        setFollowers(
-          JSON.stringify(response.data.artists.items[0].followers.total)
-        );
-        setId(JSON.stringify(response.data.artists.items[0].id));
-        setImage(JSON.stringify(response.data.artists.items[0].images[0].url));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const AlbumSearch = () => {
-    axios
-      .get(
-        `https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/albums?include_groups=single%2Cappears_on&market=ES&limit=10&offset=5`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        console.log(`album name ${response.data.items[1].name}`);
-        console.log(`release date ${response.data.items[1].release_date}`);
-        console.log(`total tracks ${response.data.items[1].total_tracks}`);
-        console.log(
-          `preview album link ${response.data.items[1].external_urls.spotify}`
-        );
-        console.log(
-          `Artits included  ${response.data.items[1].artists[0].name}`
-        );
-        console.log(`Album cover is  ${response.data.items[1].images[0].url}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const Login = () => {
+    return (
+      <div className={classes.login}>
+        <img
+          src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
+          alt="Spotify-Logo"
+        />
+        <a onClick={handleLogin}>LOGIN WITH SPOTIFY</a>
+      </div>
+    );
   };
 
   return (
-    <div className="App">
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={getPlaylist}>Get playlist</button>
-      <button onClick={getArtist}>Get Artist</button>
-      <button onClick={searchArtist}>Search Artist </button>
-      <button onClick={AlbumSearch}>Album Search </button>
-
-      <input
-        onChange={(e) => {
-          setSearchQuery(e.target.value);
-        }}
-      />
-      <table>
-        <tr>
-          <th>Image</th>
-          <th>Poplurity</th>
-          <th>Followers</th>
-        </tr>
-        <tr>
-          <td>{image}</td>
-          <td>{popularity}</td>
-          <td>{followers}</td>
-        </tr>
-      </table>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route path="/artist/albums/">
+          <ArtistAlbums />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
